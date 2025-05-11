@@ -1,1 +1,4 @@
-com\ubu\proyecto_taller\TrabajoApplication.class
+com\ubu\config\SecurityConfig.class
+com\ubu\controller\HomeController.class
+com\ubu\config\UserConfiguration.class
+com\ubu\TrabajoApplication.class

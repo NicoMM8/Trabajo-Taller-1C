@@ -1,4 +1,4 @@
-package com.ubu.proyecto_taller;
+package com.ubu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

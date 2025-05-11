@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"         
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
@@ -5,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Identificación del proyecto -->
-    <groupId>com.ubu</groupId>
+    <groupId>com.ubu.proyecto_taller</groupId>
     <artifactId>TrabajoTaller</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>Trabajo Taller</name>
+    <name>Trabajo-Taller-1C</name>
     <description>Proyecto de ejemplo que integra Spring Boot, JPA, Hibernate, Thymeleaf, y Spring Security.</description>
 
     <!-- Heredar las configuraciones de Spring Boot -->
