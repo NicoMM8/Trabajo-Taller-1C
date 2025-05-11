@@ -7,18 +7,6 @@ Frontend sofisticado y estéticamente agradable, con un tema de libre elección 
 - Login securizado  y logout
 - 2 juegos de pantallas que permitan Create , Read, Update y Delete de datos de entidades.
   
-La aplicación constará al menos de:   
-
-- Una página principal
-- Una pantalla de mantenimiento de usuarios.
-
-
-Las tecnologías sugeridas son, Spring Boot , JPA , Hibernate , y Thymeleaf.
-- Login securizado  y logout
- 
-2 juegos de pantallas que permitan Create , Read, Update y Delete de datos de entidades.
-2.     Las tecnologías sugeridas son, Spring Boot , JPA , Hibernate , y Thymeleaf.
-
 La base de datos a utilizar es de elección libre ( recomendado Postgresql o MySql.
 
 Se sugiere usar  Bootstrap  
