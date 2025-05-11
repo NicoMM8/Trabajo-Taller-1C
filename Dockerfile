@@ -14,5 +14,5 @@ WORKDIR /app
 COPY --from=build /app/target/TrabajoTaller-1.0.0.jar app.jar
 # Expone el puerto en el que la aplicación se ejecuta (en este ejemplo, 8090)
 EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8090"]
 
