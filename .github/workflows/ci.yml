@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'temurin'
 
       - name: Construir y ejecutar pruebas con Maven
         run: mvn clean verify
+        
