@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Productos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container mt-4">
+  <h2>Listado de Productos</h2>
+  <a th:href="@{/productos/nuevo}" class="btn btn-success mb-3">Nuevo Producto</a>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="producto : ${productos}">
+      <td th:text="${producto.id}">1</td>
+      <td th:text="${producto.nombre}">Nombre</td>
+      <td th:text="${producto.descripcion}">Descripción</td>
+      <td th:text="${producto.precio}">Precio</td>
+      <td>
+        <a th:href="@{'/productos/editar/' + ${producto.id}}" class="btn btn-primary btn-sm">Editar</a>
+        <a th:href="@{'/productos/eliminar/' + ${producto.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este producto?');">
+          Eliminar
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

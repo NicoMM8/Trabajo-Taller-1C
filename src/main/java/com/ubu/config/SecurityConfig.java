@@ -14,7 +14,19 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll()
+                        // Rutas públicas
+                        .antMatchers("/", "/login", "/css/**", "/js/**", "/images/**", "/registro").permitAll()
+
+                        // Gestión de eventos: accesible para organizador y admin
+                        .antMatchers("/eventos/**").hasAnyRole("ORGANIZADOR", "ADMIN")
+
+                        // Gestión de usuarios en general (lista completa, eliminación, asignaciones, etc.)
+                        .antMatchers("/usuarios/todos/**").hasRole("ADMIN")
+
+                        // Rutas para el usuario autenticado: modificar su perfil, etc.
+                        .antMatchers("/usuarios/miPerfil/**").authenticated()
+
+                        // El resto: acceso autenticado
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -27,8 +39,11 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
-
         return http.build();
     }
 }
+
+
+
+
 

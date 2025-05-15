@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+<div th:fragment="heroSection">
+    <section class="py-5 text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Bienvenido a Conexión Local</h1>
+            <p class="lead">Descubre eventos culturales, artísticos y experiencias auténticas cerca de ti.</p>
+            <a class="btn btn-primary btn-lg" th:href="@{/eventos}">Explorar Eventos</a>
+        </div>
+    </section>
+</div>
+</body>
+</html>

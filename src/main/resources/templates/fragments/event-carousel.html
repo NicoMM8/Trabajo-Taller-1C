@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+<div th:fragment="eventCarousel">
+    <!-- Aquí integras un carrusel de eventos. Puede ser un carrusel de Bootstrap con datos dinámicos -->
+    <div id="eventCarouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Ejemplo estático: en un caso real, iterarías sobre una lista de eventos -->
+            <div class="carousel-item active">
+                <img src="/images/event1.jpg" class="d-block w-100" alt="Evento 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Evento 1</h5>
+                    <p>Descripción breve del evento 1.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/images/event2.jpg" class="d-block w-100" alt="Evento 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Evento 2</h5>
+                    <p>Descripción breve del evento 2.</p>
+                </div>
+            </div>
+            <!-- Agrega más items según necesidad -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#eventCarouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#eventCarouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+</div>
+</body>
+</html>

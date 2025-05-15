@@ -18,12 +18,23 @@ public class UserConfiguration {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails usuario = User.builder()
+        UserDetails user = User.builder()
                 .username("usuario")
-                .password(passwordEncoder.encode("clave"))
-                .roles("USER")
+                .password(passwordEncoder.encode("claveUsuario"))
+                .roles("USER") // Usuario normal
                 .build();
-        return new InMemoryUserDetailsManager(usuario);
+        UserDetails organizador = User.builder()
+                .username("organizador")
+                .password(passwordEncoder.encode("claveOrganizador"))
+                .roles("ORGANIZADOR") // Puede gestionar eventos
+                .build();
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("claveAdmin"))
+                .roles("ADMIN") // Puede gestionar tanto eventos como usuarios
+                .build();
+        return new InMemoryUserDetailsManager(user, organizador, admin);
     }
 }
+
 
