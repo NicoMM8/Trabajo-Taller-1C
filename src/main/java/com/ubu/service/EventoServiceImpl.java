@@ -1,6 +1,8 @@
 package com.ubu.service;
 
 import java.util.List;
+
+import com.ubu.exception.EventoNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ubu.modelo.Evento;
 import com.ubu.repository.EventoRepositorio;
@@ -21,7 +23,9 @@ public class EventoServiceImpl implements ServicioEvento {
 
     @Override
     public Evento getEventoById(Long id) {
-        return eventoRepositorio.findById(id).orElse(null);
+        // Podrías lanzar una excepción si no se encuentra el evento
+        return eventoRepositorio.findById(id)
+                .orElseThrow(() -> new EventoNotFoundException("El evento con id " + id + " no fue encontrado."));
     }
 
     @Override
@@ -31,7 +35,11 @@ public class EventoServiceImpl implements ServicioEvento {
 
     @Override
     public void deleteEvento(Long id) {
+        if (!eventoRepositorio.existsById(id)) {
+            throw new EventoNotFoundException("El evento con id " + id + " no existe");
+        }
         eventoRepositorio.deleteById(id);
     }
 }
+
 

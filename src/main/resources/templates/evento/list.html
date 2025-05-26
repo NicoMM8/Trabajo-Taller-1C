@@ -1,33 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Listado de Productos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Listado de Eventos</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 </head>
 <body>
 <div class="container mt-4">
-  <h2>Listado de Productos</h2>
-  <a th:href="@{/productos/nuevo}" class="btn btn-success mb-3">Nuevo Producto</a>
-  <table class="table table-bordered">
-    <thead>
+  <!-- Barra de navegación: Botón de cerrar sesión y volver atrás -->
+  <div class="d-flex justify-content-end mb-3">
+    <a th:href="@{/logout}" class="btn btn-danger mr-2">Cerrar Sesión</a>
+    <button type="button" onclick="goBack()" class="btn btn-secondary">Volver Atrás</button>
+  </div>
+
+  <h2 class="mb-4">Listado de Eventos</h2>
+  <!-- Botón para crear un nuevo evento -->
+  <a th:href="@{/eventos/nuevo}" class="btn btn-success mb-3">Nuevo Evento</a>
+
+  <!-- Tabla de listado -->
+  <table class="table table-bordered table-striped">
+    <thead class="thead-light">
     <tr>
       <th>ID</th>
       <th>Nombre</th>
       <th>Descripción</th>
-      <th>Precio</th>
+      <th>Fecha y Hora</th>
+      <th>Ubicación</th>
+      <th>Aforo</th>
       <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="producto : ${productos}">
-      <td th:text="${producto.id}">1</td>
-      <td th:text="${producto.nombre}">Nombre</td>
-      <td th:text="${producto.descripcion}">Descripción</td>
-      <td th:text="${producto.precio}">Precio</td>
+    <!-- Iterar sobre la lista de eventos -->
+    <tr th:each="evento : ${eventos}">
+      <td th:text="${evento.id}">1</td>
+      <td th:text="${evento.nombre}">Nombre del Evento</td>
+      <td th:text="${evento.descripcion}">Descripción breve</td>
+      <td th:text="${#dates.format(evento.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2025 20:00</td>
+      <td th:text="${evento.ubicacion}">Lugar del Evento</td>
+      <td th:text="${evento.aforo}">100</td>
       <td>
-        <a th:href="@{'/productos/editar/' + ${producto.id}}" class="btn btn-primary btn-sm">Editar</a>
-        <a th:href="@{'/productos/eliminar/' + ${producto.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este producto?');">
+        <a th:href="@{'/eventos/editar/' + ${evento.id}}" class="btn btn-primary btn-sm">Editar</a>
+        <a th:href="@{'/eventos/eliminar/' + ${evento.id}}" class="btn btn-danger btn-sm"
+           onclick="return confirm('¿Está seguro de eliminar este evento?');">
           Eliminar
         </a>
       </td>
@@ -37,3 +58,4 @@
 </div>
 </body>
 </html>
+

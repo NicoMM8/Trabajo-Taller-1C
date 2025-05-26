@@ -1,5 +1,6 @@
 com\ubu\config\SecurityConfig.class
 com\ubu\controller\ControlUsuarios.class
+com\ubu\exception\EventoNotFoundException.class
 com\ubu\TrabajoApplication.class
 com\ubu\dto\Category.class
 com\ubu\modelo\Evento.class
@@ -12,7 +13,9 @@ com\ubu\controller\LoginController.class
 com\ubu\exception\ResourceNotFoundException.class
 com\ubu\exception\GlobalExceptionHandler.class
 com\ubu\controller\ControlEvento.class
+com\ubu\service\CustomUserDetailsService.class
 com\ubu\repository\RepositorioUsuario.class
+com\ubu\exception\UsuarioNotFoundException.class
 com\ubu\service\EventoServiceImpl.class
 com\ubu\modelo\Usuario.class
 com\ubu\service\ServicioUsuario.class

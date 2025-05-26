@@ -26,21 +26,28 @@ public class ControlUsuarios {
     public String listUsuarios(Model model) {
         logger.info("Listando usuarios");
         model.addAttribute("usuarios", servicioUsuario.getAllUsers());
-        return "usuario/list";  // Vista en templates/usuario/list.html
+        return "user/list";  // Vista en templates/usuario/list.html
     }
 
     // Mostrar formulario para un nuevo usuario
     @GetMapping("/nuevo")
     public String newUsuarioForm(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuario/form";  // Vista en templates/usuario/form.html
+        return "user/form";  // Vista en templates/usuario/form.html
+    }
+
+    @GetMapping("/registro")
+    public String mostrarRegistro(Model model) {
+        // Agrega un objeto Usuario vacío al modelo para que el formulario se vincule a él.
+        model.addAttribute("usuario", new Usuario());
+        return "registro";  // Con esto se buscará la plantilla en: src/main/resources/templates/registro.html
     }
 
     // Procesar el guardado de usuario (para crear o actualizar)
     @PostMapping("/guardar")
-    public String saveUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult bindingResult) {
+    public String saveUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "usuario/form";  // Se reenvía al formulario si hay errores de validación.
+            return "user/form";  // Se reenvía al formulario si hay errores de validación.
         }
         servicioUsuario.saveUser(usuario);
         return "redirect:/usuarios";
@@ -48,15 +55,15 @@ public class ControlUsuarios {
 
     // Mostrar formulario para editar un usuario existente
     @GetMapping("/editar/{id}")
-    public String editUsuario(@PathVariable("id") Long id, Model model) {
+    public String editUsuario(@PathVariable Long id, Model model) {
         Usuario usuario = servicioUsuario.getUserById(id);
         model.addAttribute("usuario", usuario);
-        return "usuario/form";  // Reutilizamos el mismo formulario.
+        return "user/form";  // Reutilizamos el mismo formulario.
     }
 
     // Eliminar un usuario
     @GetMapping("/eliminar/{id}")
-    public String deleteUsuario(@PathVariable("id") Long id) {
+    public String deleteUsuario(@PathVariable Long id) {
         servicioUsuario.deleteUser(id);
         return "redirect:/usuarios";
     }

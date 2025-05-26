@@ -34,7 +34,8 @@
             <td th:text="${user.email}">email@example.com</td>
             <td>
                 <a th:href="@{'/usuarios/editar/' + ${user.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a th:href="@{'/usuarios/eliminar/' + ${user.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este usuario?');">
+                <a th:href="@{'/usuarios/eliminar/' + ${user.id}}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Está seguro de eliminar este usuario?');">
                     Eliminar
                 </a>
             </td>
@@ -44,3 +45,4 @@
 </div>
 </body>
 </html>
+
