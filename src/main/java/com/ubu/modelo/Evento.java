@@ -3,6 +3,9 @@ package com.ubu.modelo;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import javax.persistence.ManyToOne; // Added import
+import javax.persistence.FetchType; // Added import
+import javax.persistence.JoinColumn; // Added import
 
 @Entity
 @Table(name = "eventos")
@@ -20,7 +23,6 @@ public class Evento {
     @Size(max = 1000, message = "La descripción puede tener hasta 1000 caracteres")
     private String descripcion;
 
-    // El precio no debe ser final para permitir su modificación y lectura por JPA
     @NotNull(message = "El precio es obligatorio")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor que 0")
     @Column(nullable = false)
@@ -45,13 +47,17 @@ public class Evento {
     @DecimalMax(value = "180.0", inclusive = true, message = "La longitud máxima es 180.0")
     private Double longitud;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizador_id", nullable = false)
+    private Usuario organizador;
+
     // Constructor vacío
     public Evento() {}
 
-    // Constructor completo (incluye precio)
+    // Constructor completo (incluye precio y organizador)
     public Evento(String nombre, String descripcion, LocalDateTime fecha,
                   String ubicacion, Integer aforo, Double precio,
-                  Double latitud, Double longitud) {
+                  Double latitud, Double longitud, Usuario organizador) { // Added Usuario organizador
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -60,6 +66,7 @@ public class Evento {
         this.precio = precio;
         this.latitud = latitud;
         this.longitud = longitud;
+        this.organizador = organizador; // Added this line
     }
 
     // Getters y Setters
@@ -90,6 +97,9 @@ public class Evento {
     public Double getLongitud() { return longitud; }
     public void setLongitud(Double longitud) { this.longitud = longitud; }
 
+    public Usuario getOrganizador() { return organizador; } // Added getter
+    public void setOrganizador(Usuario organizador) { this.organizador = organizador; } // Added setter
+
     @Override
     public String toString() {
         return "Evento{" +
@@ -99,6 +109,7 @@ public class Evento {
                 ", ubicacion='" + ubicacion + '\'' +
                 ", aforo=" + aforo +
                 ", precio=" + precio +
+                ", organizador=" + (organizador != null ? organizador.getUsername() : "null") + // Updated toString
                 '}';
     }
 }
