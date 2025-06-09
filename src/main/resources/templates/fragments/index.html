@@ -4,12 +4,48 @@
   <meta charset="UTF-8">
   <title>Página Principal</title>
   <th:block th:replace="fragments/header :: header"></th:block>
+  <link rel="icon" type="image/png" href="/images/favicon.png"/>
 </head>
 <body>
 <div class="container mt-5">
   <h1>Bienvenido a Mi Proyecto</h1>
   <p>Esta es la página principal. Usa la navegación para acceder a las diferentes secciones.</p>
 </div>
+<div th:if="${logoutMessage}" class="alert alert-success text-center" th:text="${logoutMessage}"></div>
 <th:block th:replace="fragments/footer :: footer"></th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Convierte la lista de eventos a un array JS
+    var eventos = /*[[${eventos}]]*/ [];
+    /*]]>*/
+</script>
+<script>
+    function inicializarMapa(lat, lng) {
+        const ubicacion = { lat, lng };
+        const mapa = new google.maps.Map(document.getElementById("mapa"), {
+            center: ubicacion,
+            zoom: 12
+        });
+
+        new google.maps.Marker({
+            position: ubicacion,
+            map: mapa,
+            title: "Tu ubicación"
+        });
+
+        // Añade los eventos reales al mapa
+        if (Array.isArray(eventos)) {
+            eventos.forEach(function(evento) {
+                if (evento.latitud && evento.longitud) {
+                    new google.maps.Marker({
+                        position: { lat: evento.latitud, lng: evento.longitud },
+                        map: mapa,
+                        title: evento.nombre
+                    });
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>

@@ -2,6 +2,7 @@ C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\T
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\exception\ResourceNotFoundException.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\service\EventoServiceImpl.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\modelo\Evento.java
+C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\modelo\UserRole.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\config\UserConfiguration.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\service\UsuarioServicioImpl.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\repository\EventoRepositorio.java
@@ -15,6 +16,7 @@ C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\T
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\dto\Category.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\service\ServicioEvento.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\controller\ControlUsuarios.java
+C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\dto\EventoMapaDTO.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\controller\HomeController.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\service\CustomUserDetailsService.java
 C:\Users\nicom\OneDrive\Escritorio\INFORMÁTICA\5o Curso\SISTEMAS DISTRIBUIDOS\Trabajo-Taller-1C\Trabajo-Taller-1C\src\main\java\com\ubu\exception\GlobalExceptionHandler.java

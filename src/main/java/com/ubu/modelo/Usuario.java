@@ -1,53 +1,93 @@
 package com.ubu.modelo;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.persistence.Enumerated; // Added import
-import javax.persistence.EnumType; // Added import
-import java.util.Set; // Added import
-import java.util.HashSet; // Added import
-import javax.persistence.OneToMany; // Added import
-import javax.persistence.CascadeType; // Added import
-import javax.persistence.FetchType; // Added import
-// com.ubu.modelo.Evento is implicitly used by Set<Evento> and mappedBy
+import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
+/**
+ * Representa un usuario de la aplicación.
+ * <p>
+ * Esta entidad se mapea a la tabla usuarios de la base de datos e incluye
+ * información requerida para el registro, autenticación y gestión del usuario. Además, define la relación
+ * con los eventos que el usuario crea (cuando actúa como organizador).
+ * </p>
+ * 
+ * El campo confirmPassword se utiliza únicamente en el proceso de validación del registro y no se persiste.
+ * 
+ * @author Nicolás Muñoz Miguel
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
 
+    /**
+     * Identificador único del usuario, se genera automáticamente.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Nombre de usuario, que debe ser único y no nulo.
+     */
     @NotBlank(message = "El usuario es obligatorio")
     @Column(nullable = false, unique = true)
     private String username;
 
+    /**
+     * Contraseña del usuario.
+     * Se recomienda almacenar esta contraseña en forma encriptada.
+     */
     @NotBlank(message = "La contraseña es obligatoria")
     @Column(nullable = false)
     private String password;
 
+    /**
+     * Email único del usuario.
+     * Se valida que contenga un formato de correo electrónico.
+     */
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "El email debe ser válido")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Enumerated(EnumType.STRING) // Changed annotation
-    @Column(nullable = false) // Kept nullable = false from previous @NotBlank
-    private UserRole rol; // Changed type to UserRole
+    /**
+     * Rol asignado al usuario.
+     * Se mapea el enum {@link UserRole} a una cadena en la BD.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole rol;
 
-    // Este campo es usado solo en la validación del registro, no se persiste en la BD.
+    /**
+     * Campo utilizado únicamente para la confirmación de contraseña durante el registro.
+     * Este campo no se persiste en la base de datos.
+     */
     @Transient
     private String confirmPassword;
 
+    /**
+     * Conjunto de eventos creados por el usuario, útil cuando el usuario actúa como organizador.
+     * La relación está gestionada de forma bidireccional con la entidad {@link Evento}.
+     * Se usa cascade para propagar operaciones y orphanRemoval para eliminar eventos huérfanos.
+     */
     @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Evento> eventosCreados = new HashSet<>();
 
-    // Constructores
+    /**
+     * Constructor vacío, requerido por JPA.
+     */
     public Usuario() {}
 
-    // Updated constructor to accept UserRole
+    /**
+     * Constructor que inicializa un usuario con los datos básicos.
+     * 
+     * @param username Nombre de usuario.
+     * @param password Contraseña del usuario.
+     * @param email    Email del usuario.
+     * @param rol      Rol asignado al usuario.
+     */
     public Usuario(String username, String password, String email, UserRole rol) {
         this.username = username;
         this.password = password;
@@ -56,30 +96,134 @@ public class Usuario {
     }
 
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    /**
+     * Obtiene el identificador único del usuario.
+     * 
+     * @return ID del usuario.
+     */
+    public Long getId() {
+        return id;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    /**
+     * Establece el identificador del usuario.
+     * 
+     * @param id El ID a asignar.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    /**
+     * Obtiene el nombre de usuario.
+     * 
+     * @return Nombre de usuario.
+     */
+    public String getUsername() {
+        return username;
+    }
 
-    // Updated getter for rol
-    public UserRole getRol() { return rol; }
-    // Updated setter for rol
-    public void setRol(UserRole rol) { this.rol = rol; }
+    /**
+     * Establece el nombre de usuario.
+     * 
+     * @param username Nombre de usuario a asignar.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getConfirmPassword() { return confirmPassword; }
-    public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
+    /**
+     * Obtiene la contraseña del usuario.
+     * 
+     * @return Contraseña del usuario.
+     */
+    public String getPassword() {
+        return password;
+    }
 
-    // Getters and setters for eventosCreados
-    public Set<Evento> getEventosCreados() { return eventosCreados; }
-    public void setEventosCreados(Set<Evento> eventosCreados) { this.eventosCreados = eventosCreados; }
+    /**
+     * Establece la contraseña del usuario.
+     * 
+     * @param password Contraseña a asignar.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Obtiene el email del usuario.
+     * 
+     * @return Email del usuario.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Establece el email del usuario.
+     * 
+     * @param email Email a asignar.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Obtiene el rol asignado al usuario.
+     * 
+     * @return Rol del usuario.
+     */
+    public UserRole getRol() {
+        return rol;
+    }
+
+    /**
+     * Establece el rol del usuario.
+     * 
+     * @param rol Rol a asignar.
+     */
+    public void setRol(UserRole rol) {
+        this.rol = rol;
+    }
+
+    /**
+     * Obtiene el valor de confirmPassword (para validación de registro).
+     * 
+     * @return Valor de confirmación de contraseña.
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * Establece el valor de confirmPassword.
+     * 
+     * @param confirmPassword Valor a asignar para la confirmación de la contraseña.
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * Obtiene el conjunto de eventos que el usuario ha creado.
+     * 
+     * @return Conjunto de eventos creados.
+     */
+    public Set<Evento> getEventosCreados() {
+        return eventosCreados;
+    }
+
+    /**
+     * Establece el conjunto de eventos que el usuario ha creado.
+     * 
+     * @param eventosCreados Conjunto de eventos a asignar.
+     */
+    public void setEventosCreados(Set<Evento> eventosCreados) {
+        this.eventosCreados = eventosCreados;
+    }
 }
+
 
 
 

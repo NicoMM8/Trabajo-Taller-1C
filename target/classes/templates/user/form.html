@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario de Usuario</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script>
         function goBack() {
             window.history.back();
@@ -14,8 +14,10 @@
 <div class="container mt-4">
     <!-- Barra de navegación para Logout y Navegación -->
     <div class="d-flex justify-content-end mb-3">
-        <a th:href="@{/logout}" class="btn btn-danger mr-2">Cerrar Sesión</a>
-        <button type="button" onclick="goBack()" class="btn btn-secondary">Volver Atrás</button>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger me-2">Cerrar Sesión</button>
+        </form>
+        <div th:replace="fragments/back-home :: backHomeButton"></div>
     </div>
 
     <!-- Tarjeta para encapsular el formulario -->
@@ -25,51 +27,52 @@
                 th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'">Nuevo / Editar Usuario</h2>
         </div>
         <div class="card-body">
-            <!-- Sección para errores globales, si hubieran -->
-            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
-                <ul>
-                    <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
-                </ul>
-            </div>
-
             <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <!-- Sección para errores globales, si hubieran -->
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                    <ul>
+                        <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+                    </ul>
+                </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="username">Usuario:</label>
                     <input type="text" id="username" th:field="*{username}" class="form-control"
                            placeholder="Ingrese el usuario" required
-                           th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"/>
+                           th:classappend="${#fields.hasErrors('username')} ? ' is-invalid' : ''"/>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}"
                          th:errors="*{username}"></div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="email">Email:</label>
                     <input type="email" id="email" th:field="*{email}" class="form-control"
                            placeholder="Ingrese el correo" required
-                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"/>
+                           th:classappend="${#fields.hasErrors('email')} ? ' is-invalid' : ''"/>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
                          th:errors="*{email}"></div>
                 </div>
 
                 <!-- Mostrar el campo de contraseña solo para nuevos usuarios -->
-                <div class="form-group" th:if="${usuario.id == null}">
+                <div class="form-group mb-3">
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" th:field="*{password}" class="form-control"
-                           placeholder="Ingrese la contraseña" required
-                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"/>
+                            placeholder="Ingrese la contraseña (dejar en blanco para no cambiarla)"
+                            th:classappend="${#fields.hasErrors('password')} ? ' is-invalid' : ''"/>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}"></div>
+                        th:errors="*{password}"></div>
                 </div>
 
-                <!-- Campo para seleccionar rol; útil si deseas permitir cambiar o definir el rol -->
-                <div class="form-group">
+                <!-- Campo para seleccionar rol -->
+                <div class="form-group mb-3">
                     <label for="rol">Rol:</label>
                     <select id="rol" th:field="*{rol}" class="form-control"
-                            th:classappend="${#fields.hasErrors('rol')} ? 'is-invalid' : ''">
+                            th:classappend="${#fields.hasErrors('rol')} ? ' is-invalid' : ''">
                         <option value="" disabled selected>Seleccione un rol</option>
                         <option value="USER" th:selected="${usuario.rol == 'USER'}">User</option>
                         <option value="ORGANIZADOR" th:selected="${usuario.rol == 'ORGANIZADOR'}">Organizador</option>
+                        <option value="ADMIN" th:selected="${usuario.rol == 'ADMIN'}">Admin</option>
                     </select>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('rol')}"
                          th:errors="*{rol}"></div>
@@ -81,8 +84,6 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-

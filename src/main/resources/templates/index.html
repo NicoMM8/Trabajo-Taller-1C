@@ -11,7 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"/>
-    <!-- Global CSS personalizado -->
+
+    <link rel="icon" type="image/png" href="/images/favicon.png"/>
 </head>
 <body>
 <!-- Definimos el fragmento de contenido, el layout base se encargará de incluir header y footer -->
@@ -21,10 +22,16 @@
         <div class="container">
             <h1 class="display-4 fw-bold">Bienvenido a Conexión Local</h1>
             <p class="lead">Descubre eventos culturales, artísticos y experiencias auténticas cerca de ti.</p>
-            <a class="btn btn-light btn-lg" th:href="@{/eventos}">Explorar Eventos</a>
+            <a class="btn btn-light btn-lg" th:href="@{/eventos/explorar}">Explorar Eventos</a>
             <span th:if="${#authorization.expression('hasRole(''ORGANIZADOR'') or hasRole(''ADMIN'')')}">
-                    <a class="btn btn-outline-light btn-lg ms-3" th:href="@{/eventos/nuevo}">Organizar Eventos</a>
-                </span>
+                <a class="btn btn-outline-light btn-lg ms-3" th:href="@{/eventos}">Organizar Eventos</a>
+            </span>
+
+            <!-- Botones de registro e inicio de sesión solo si NO está autenticado -->
+            <div class="mt-4 d-flex justify-content-center gap-3" sec:authorize="!isAuthenticated()">
+                <a class="btn btn-outline-light btn-lg" th:href="@{/login}">Iniciar sesión</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/registro}">Registrarse</a>
+    </div>
         </div>
         <div sec:authorize="hasRole('ADMIN')">
             <a href="#" th:href="@{/usuarios}" class="btn btn-outline-primary">Gestión de Usuarios</a>
@@ -42,34 +49,58 @@
         </div>
     </section>
 
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var eventos = /*[[${eventosMapa}]]*/ [];
+    /*]]>*/
+    </script>
     <script>
         function inicializarMapa(lat, lng) {
-            const ubicacion = { lat, lng }; // Ubicación del usuario
+            const ubicacion = { lat, lng };
             const mapa = new google.maps.Map(document.getElementById("mapa"), {
                 center: ubicacion,
                 zoom: 12
             });
 
-            // Marcador en ubicación del usuario
+            // Marcador personalizado para tu ubicación
             new google.maps.Marker({
                 position: ubicacion,
                 map: mapa,
-                title: "Tu ubicación"
+                title: "Tu ubicación",
+                icon: {
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Icono azul
+                    scaledSize: new google.maps.Size(40, 40)
+                }
             });
 
-            // Aquí podrías agregar más marcadores con eventos cercanos
-            const eventos = [
-                { lat: lat + 0.01, lng: lng + 0.01, nombre: "Evento 1" },
-                { lat: lat - 0.02, lng: lng + 0.01, nombre: "Evento 2" }
-            ];
+            // Añade los eventos reales al mapa con InfoWindow
+            if (Array.isArray(eventos)) {
+                eventos.forEach(function(evento) {
+                    if (evento.latitud && evento.longitud) {
+                        const marker = new google.maps.Marker({
+                            position: { lat: evento.latitud, lng: evento.longitud },
+                            map: mapa,
+                            title: evento.nombre
+                        });
 
-            eventos.forEach(evento => {
-                new google.maps.Marker({
-                    position: { lat: evento.lat, lng: evento.lng },
-                    map: mapa,
-                    title: evento.nombre
+                        // InfoWindow con información
+                        const infoContent = `
+                            <div style="min-width:200px">
+                                <h5 style="margin-bottom:8px;">${evento.nombre}</h5>
+                                <p style="margin:0;">${evento.descripcion ? evento.descripcion : ''}</p>
+                                <a href="/eventos/${evento.id}" class="btn btn-sm btn-primary mt-2">Ver Detalle</a>
+                            </div>
+                        `;
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: infoContent
+                        });
+
+                        marker.addListener('click', function() {
+                            infoWindow.open(mapa, marker);
+                        });
+                    }
                 });
-            });
+            }
         }
 
         function obtenerUbicacion() {

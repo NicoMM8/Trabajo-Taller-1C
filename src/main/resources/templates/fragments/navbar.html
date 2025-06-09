@@ -10,12 +10,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Explorar</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Eventos</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/eventos/explorar}">Explorar eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/eventos}">Eventos</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="#">Organizadores</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Sobre nosotros</a></li>
                 </ul>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-3">
+                    <a class="btn btn-outline-primary" th:href="@{/}">Volver a inicio</a>
                     <a class="btn btn-outline-secondary" th:href="@{/login}">Iniciar sesión</a>
                     <a class="btn btn-primary" th:href="@{/registro}">Registrarse</a>
                 </div>

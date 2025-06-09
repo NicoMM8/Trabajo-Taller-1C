@@ -8,40 +8,66 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Controlador global de excepciones para la aplicación.
+ * <p>
+ * Captura las excepciones lanzadas en los controladores y redirige a vistas específicas
+ * que muestran mensajes de error amigables al usuario.
+ * </p>
+ * 
+ * @author Nicolás Muñoz Miguel
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // Manejador para errores generales
+    /**
+     * Maneja cualquier excepción no específica que ocurra en la aplicación.
+     *
+     * @param ex    La excepción capturada.
+     * @param model Modelo para pasar atributos a la vista.
+     * @return Nombre de la vista genérica de error ("error").
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleGeneralException(Exception ex, Model model) {
         logger.error("Ocurrió un error inesperado: ", ex);
-        // Mensaje genérico para el usuario
         model.addAttribute("errorMessage", "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.");
-        return "error"; // Redirige a templates/error.html
+        return "error"; // Vista ubicada en: templates/error.html
     }
 
-    // Manejador para recursos no encontrados
+    /**
+     * Maneja excepciones de recurso no encontrado.
+     *
+     * @param ex    La excepción ResourceNotFoundException capturada.
+     * @param model Modelo para pasar atributos a la vista.
+     * @return Nombre de la vista para error 404 ("error-404").
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleResourceNotFound(ResourceNotFoundException ex, Model model) {
         logger.warn("Recurso no encontrado: {}", ex.getMessage());
         model.addAttribute("errorMessage", "El recurso solicitado no fue encontrado.");
-        return "error-404"; // Redirige a templates/error-404.html
+        return "error-404"; // Vista ubicada en: templates/error-404.html
     }
 
-    // Manejador para argumentos ilegales (ejemplo para error 400)
+    /**
+     * Maneja excepciones debidas a argumentos inválidos.
+     *
+     * @param ex    La excepción IllegalArgumentException capturada.
+     * @param model Modelo para pasar atributos a la vista.
+     * @return Nombre de la vista para error 400 ("error-400").
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleIllegalArgumentException(IllegalArgumentException ex, Model model) {
         logger.warn("Argumento inválido: {}", ex.getMessage());
         model.addAttribute("errorMessage", ex.getMessage());
-        return "error-400"; // Redirige a templates/error-400.html
+        return "error-400"; // Vista ubicada en: templates/error-400.html
     }
 
-    // Puedes agregar otros manejadores específicos según lo requiera la aplicación
 }
+
 
 
